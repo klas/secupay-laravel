@@ -2,11 +2,11 @@
     "$schema": "https://getcomposer.org/schema.json",
     "name": "laravel/laravel",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "description": "Laravel API Challenge - PHP Backend Developer Test",
+    "keywords": ["laravel", "framework", "api", "php", "challenge"],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.4",
         "hamidreza2005/laravel-api-error-handler": "dev-main",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1"
@@ -19,7 +19,10 @@
         "laravel/sail": "^1.41",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
-        "phpunit/phpunit": "^11.5.3"
+        "phpunit/phpunit": "^11.5.3",
+        "codeception/codeception": "^5.1",
+        "codeception/module-laravel": "^3.1",
+        "codeception/module-rest": "^3.3"
     },
     "autoload": {
         "psr-4": {

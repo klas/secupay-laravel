@@ -22,3 +22,7 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# API Challenge specific
+/tests/_output/
+/tests/_support/_generated
