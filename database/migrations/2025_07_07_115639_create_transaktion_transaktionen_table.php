@@ -23,7 +23,7 @@ return new class extends Migration
             $table->index('erstelldatum');
             $table->index(['produkt_id', 'erstelldatum']);
             $table->index(['timestamp', 'produkt_id']);
-            $table->index(['vertrag_id', 'produkt_id', 'erstelldatum']);
+            $table->index(['vertrag_id', 'produkt_id', 'erstelldatum'], 'ver_prod_erst');
             $table->index(['waehrung_id', 'erstelldatum']);
         });
     }

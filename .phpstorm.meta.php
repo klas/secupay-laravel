@@ -736,6 +736,11 @@ namespace PHPSTORM_META {
     ]));
 
     override(\config(), map([
+            'api-error-handler.handlers.hamidreza2005\LaravelApiErrorHandler\Handlers\NotFoundExceptionHandler' => 'array',
+            'api-error-handler.handlers.hamidreza2005\LaravelApiErrorHandler\Handlers\ServerInternalExceptionHandler' => 'array',
+            'api-error-handler.handlers.hamidreza2005\LaravelApiErrorHandler\Handlers\AccessDeniedExceptionHandler' => 'array',
+            'api-error-handler.handlers.hamidreza2005\LaravelApiErrorHandler\Handlers\ValidationExceptionHandler' => 'array',
+            'api-error-handler.internal_error_handler' => 'string',
             'app.name' => 'string',
             'app.env' => 'string',
             'app.debug' => 'boolean',
@@ -1146,6 +1151,11 @@ namespace PHPSTORM_META {
             'tinker.dont_alias' => 'array',
         ]));
     override(\Illuminate\Config\Repository::get(), map([
+            'api-error-handler.handlers.hamidreza2005\LaravelApiErrorHandler\Handlers\NotFoundExceptionHandler' => 'array',
+            'api-error-handler.handlers.hamidreza2005\LaravelApiErrorHandler\Handlers\ServerInternalExceptionHandler' => 'array',
+            'api-error-handler.handlers.hamidreza2005\LaravelApiErrorHandler\Handlers\AccessDeniedExceptionHandler' => 'array',
+            'api-error-handler.handlers.hamidreza2005\LaravelApiErrorHandler\Handlers\ValidationExceptionHandler' => 'array',
+            'api-error-handler.internal_error_handler' => 'string',
             'app.name' => 'string',
             'app.env' => 'string',
             'app.debug' => 'boolean',
@@ -1556,6 +1566,11 @@ namespace PHPSTORM_META {
             'tinker.dont_alias' => 'array',
         ]));
     override(\Illuminate\Support\Facades\Config::get(), map([
+            'api-error-handler.handlers.hamidreza2005\LaravelApiErrorHandler\Handlers\NotFoundExceptionHandler' => 'array',
+            'api-error-handler.handlers.hamidreza2005\LaravelApiErrorHandler\Handlers\ServerInternalExceptionHandler' => 'array',
+            'api-error-handler.handlers.hamidreza2005\LaravelApiErrorHandler\Handlers\AccessDeniedExceptionHandler' => 'array',
+            'api-error-handler.handlers.hamidreza2005\LaravelApiErrorHandler\Handlers\ValidationExceptionHandler' => 'array',
+            'api-error-handler.internal_error_handler' => 'string',
             'app.name' => 'string',
             'app.env' => 'string',
             'app.debug' => 'boolean',
@@ -2004,6 +2019,7 @@ namespace PHPSTORM_META {
 
             registerArgumentsSet('auth', );
         registerArgumentsSet('configs', 
+'api-error-handler.handlers.hamidreza2005\\LaravelApiErrorHandler\\Handlers\\NotFoundExceptionHandler','api-error-handler.handlers.hamidreza2005\\LaravelApiErrorHandler\\Handlers\\ServerInternalExceptionHandler','api-error-handler.handlers.hamidreza2005\\LaravelApiErrorHandler\\Handlers\\AccessDeniedExceptionHandler','api-error-handler.handlers.hamidreza2005\\LaravelApiErrorHandler\\Handlers\\ValidationExceptionHandler','api-error-handler.internal_error_handler',
 'app.name','app.env','app.debug','app.url','app.frontend_url',
 'app.asset_url','app.timezone','app.locale','app.fallback_locale','app.faker_locale',
 'app.cipher','app.key','app.previous_keys','app.maintenance.driver','app.maintenance.store',
