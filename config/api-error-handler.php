@@ -6,14 +6,14 @@ use hamidreza2005\LaravelApiErrorHandler\Handlers\{
     AccessDeniedExceptionHandler,
     ValidationExceptionHandler
 };
+use App\Exceptions\Handlers\{
+    TransactionNotFoundHandler,
+    FlagbitOperationHandler,
+    InsufficientPermissionsHandler
+};
 
 return [
-
-    /*
-     * this is where you define which handler deal with which errors. each handler can handle multiple errors
-     */
-
-    "handlers" =>[
+    "handlers" => [
         NotFoundExceptionHandler::class => [
             "Symfony\Component\HttpKernel\Exception\NotFoundHttpException",
             "Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException"
@@ -29,10 +29,17 @@ return [
         ValidationExceptionHandler::class => [
             "Illuminate\Validation\ValidationException"
         ],
+        // Add your custom handlers
+        TransactionNotFoundHandler::class => [
+            "App\Exceptions\TransactionNotFoundException"
+        ],
+        FlagbitOperationHandler::class => [
+            "App\Exceptions\InvalidFlagbitOperationException"
+        ],
+        InsufficientPermissionsHandler::class => [
+            "App\Exceptions\InsufficientPermissionsException"
+        ],
     ],
 
-    /*
-     * if the app is not in debug mode. all unknown exceptions will be handled by this.
-     */
     "internal_error_handler" => ServerInternalExceptionHandler::class,
 ];

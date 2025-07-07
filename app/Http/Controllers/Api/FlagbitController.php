@@ -27,24 +27,16 @@ class FlagbitController extends Controller
      */
     public function getActiveFlagbits(GetActiveFlagbitsRequest $request): JsonResponse
     {
-        try {
-            $data = $request->validatedData();
+        $data = $request->validatedData();
 
-            $flagbits = $this->flagbitService->getActiveFlagbits(
-                $data['trans_id'],
-                $data['api_key']
-            );
+        $flagbits = $this->flagbitService->getActiveFlagbits(
+            $data['trans_id'],
+            $data['api_key']
+        );
 
-            return (new FlagbitCollectionResource($flagbits))
-                ->additional(['trans_id' => $data['trans_id']])
-                ->response();
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => $e->getMessage(),
-                'status' => 'error'
-            ], 404);
-        }
+        return (new FlagbitCollectionResource($flagbits))
+            ->additional(['trans_id' => $data['trans_id']])
+            ->response();
     }
 
     /**
@@ -52,30 +44,22 @@ class FlagbitController extends Controller
      */
     public function setFlagbit(SetFlagbitRequest $request): JsonResponse
     {
-        try {
-            $data = $request->validatedData();
+        $data = $request->validatedData();
 
-            $this->flagbitService->setFlagbit(
-                $data['trans_id'],
-                $data['flagbit_id'],
-                $data['api_key']
-            );
+        $this->flagbitService->setFlagbit(
+            $data['trans_id'],
+            $data['flagbit_id'],
+            $data['api_key']
+        );
 
-            $responseData = [
-                'message' => 'Flagbit set successfully',
-                'trans_id' => $data['trans_id'],
-                'flagbit_id' => $data['flagbit_id'],
-                'action' => 'set'
-            ];
+        $responseData = [
+            'message' => 'Flagbit set successfully',
+            'trans_id' => $data['trans_id'],
+            'flagbit_id' => $data['flagbit_id'],
+            'action' => 'set'
+        ];
 
-            return (new FlagbitActionResource($responseData))->response();
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => $e->getMessage(),
-                'status' => 'error'
-            ], 400);
-        }
+        return (new FlagbitActionResource($responseData))->response();
     }
 
     /**
@@ -83,30 +67,22 @@ class FlagbitController extends Controller
      */
     public function removeFlagbit(RemoveFlagbitRequest $request): JsonResponse
     {
-        try {
-            $data = $request->validatedData();
+        $data = $request->validatedData();
 
-            $this->flagbitService->removeFlagbit(
-                $data['trans_id'],
-                $data['flagbit_id'],
-                $data['api_key']
-            );
+        $this->flagbitService->removeFlagbit(
+            $data['trans_id'],
+            $data['flagbit_id'],
+            $data['api_key']
+        );
 
-            $responseData = [
-                'message' => 'Flagbit removed successfully',
-                'trans_id' => $data['trans_id'],
-                'flagbit_id' => $data['flagbit_id'],
-                'action' => 'remove'
-            ];
+        $responseData = [
+            'message' => 'Flagbit removed successfully',
+            'trans_id' => $data['trans_id'],
+            'flagbit_id' => $data['flagbit_id'],
+            'action' => 'remove'
+        ];
 
-            return (new FlagbitActionResource($responseData))->response();
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => $e->getMessage(),
-                'status' => 'error'
-            ], 400);
-        }
+        return (new FlagbitActionResource($responseData))->response();
     }
 
     /**
@@ -114,23 +90,15 @@ class FlagbitController extends Controller
      */
     public function getFlagbitHistory(GetFlagbitHistoryRequest $request): JsonResponse
     {
-        try {
-            $data = $request->validatedData();
+        $data = $request->validatedData();
 
-            $history = $this->flagbitService->getFlagbitHistory(
-                $data['trans_id'],
-                $data['api_key']
-            );
+        $history = $this->flagbitService->getFlagbitHistory(
+            $data['trans_id'],
+            $data['api_key']
+        );
 
-            return (new FlagbitHistoryResource($history))
-                ->additional(['trans_id' => $data['trans_id']])
-                ->response();
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => $e->getMessage(),
-                'status' => 'error'
-            ], 404);
-        }
+        return (new FlagbitHistoryResource($history))
+            ->additional(['trans_id' => $data['trans_id']])
+            ->response();
     }
 }
