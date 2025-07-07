@@ -5,11 +5,11 @@ namespace App\Http\Middleware;
 use App\Models\ApiKey;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 
 class ApiKeyAuth
 {
-    public function handle(Request $request, Closure $next, ?string $requireMasterKey = null): Response
+    public function handle(Request $request, Closure $next, ?string $requireMasterKey = null): JsonResponse
     {
         $token = $request->header('Authorization');
 

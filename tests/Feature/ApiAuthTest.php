@@ -70,7 +70,7 @@ class ApiAuthTest extends TestCase
 
     public function test_protected_endpoint_requires_api_key(): void
     {
-        $response = $this->getJson('/api/flagbits/active?trans_id=1');
+        $response = $this->getJson('/api/v1/flagbits/active?trans_id=1');
 
         $response->assertStatus(401)
                 ->assertJson(['error' => 'API key required']);
@@ -78,7 +78,7 @@ class ApiAuthTest extends TestCase
 
     public function test_protected_endpoint_rejects_invalid_api_key(): void
     {
-        $response = $this->getJson('/api/flagbits/active?trans_id=1', [
+        $response = $this->getJson('/api/v1/flagbits/active?trans_id=1', [
             'Authorization' => 'invalid_key'
         ]);
 
@@ -88,7 +88,7 @@ class ApiAuthTest extends TestCase
 
     public function test_protected_endpoint_rejects_expired_api_key(): void
     {
-        $response = $this->getJson('/api/flagbits/active?trans_id=1', [
+        $response = $this->getJson('/api/v1/flagbits/active?trans_id=1', [
             'Authorization' => 'expired_test_key'
         ]);
 
@@ -98,7 +98,7 @@ class ApiAuthTest extends TestCase
 
     public function test_protected_endpoint_accepts_valid_api_key(): void
     {
-        $response = $this->getJson('/api/flagbits/active?trans_id=1', [
+        $response = $this->getJson('/api/v1/flagbits/active?trans_id=1', [
             'Authorization' => 'valid_test_key'
         ]);
 
@@ -108,7 +108,7 @@ class ApiAuthTest extends TestCase
 
     public function test_master_key_endpoint_rejects_regular_key(): void
     {
-        $response = $this->postJson('/api/flagbits/set', [
+        $response = $this->postJson('/api/v1/flagbits/set', [
             'trans_id' => 1,
             'flagbit_id' => 4
         ], [
@@ -121,7 +121,7 @@ class ApiAuthTest extends TestCase
 
     public function test_master_key_endpoint_accepts_master_key(): void
     {
-        $response = $this->postJson('/api/flagbits/set', [
+        $response = $this->postJson('/api/v1/flagbits/set', [
             'trans_id' => 1,
             'flagbit_id' => 4
         ], [
@@ -134,7 +134,7 @@ class ApiAuthTest extends TestCase
 
     public function test_bearer_token_format_is_supported(): void
     {
-        $response = $this->getJson('/api/flagbits/active?trans_id=1', [
+        $response = $this->getJson('/api/v1/flagbits/active?trans_id=1', [
             'Authorization' => 'Bearer valid_test_key'
         ]);
 

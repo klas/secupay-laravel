@@ -16,7 +16,7 @@ class RemoveFlagbitRequest extends FormRequest
         return [
             'trans_id' => 'required|integer|min:1',
             'flagbit_id' => 'required|integer|min:1|max:15',
-            'api_key' => 'nullable|string'
+            'api_key' => 'nullable'
         ];
     }
 

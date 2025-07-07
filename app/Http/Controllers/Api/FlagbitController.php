@@ -10,6 +10,7 @@ use App\Http\Requests\GetFlagbitHistoryRequest;
 use App\Http\Resources\FlagbitCollectionResource;
 use App\Http\Resources\FlagbitActionResource;
 use App\Http\Resources\FlagbitHistoryResource;
+use App\Models\ApiKey;
 use App\Services\FlagbitService;
 use Illuminate\Http\JsonResponse;
 
@@ -49,7 +50,7 @@ class FlagbitController extends Controller
         $this->flagbitService->setFlagbit(
             $data['trans_id'],
             $data['flagbit_id'],
-            $data['api_key']
+            ($data['api_key'] instanceof(ApiKey::class)) ? $data['api_key'] : null
         );
 
         $responseData = [
@@ -72,7 +73,7 @@ class FlagbitController extends Controller
         $this->flagbitService->removeFlagbit(
             $data['trans_id'],
             $data['flagbit_id'],
-            $data['api_key']
+            ($data['api_key'] instanceof(ApiKey::class)) ? $data['api_key'] : null
         );
 
         $responseData = [
@@ -94,7 +95,7 @@ class FlagbitController extends Controller
 
         $history = $this->flagbitService->getFlagbitHistory(
             $data['trans_id'],
-            $data['api_key']
+            ($data['api_key'] instanceof(ApiKey::class)) ? $data['api_key'] : null
         );
 
         return (new FlagbitHistoryResource($history))

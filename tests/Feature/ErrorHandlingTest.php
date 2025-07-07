@@ -16,7 +16,7 @@ class ErrorHandlingTest extends TestCase
 
         $response = $this->withHeaders([
             'X-API-Key' => $apiKey->key,
-        ])->get('/api/flagbits/active?trans_id=99999');
+        ])->get('/api/v1/flagbits/active?trans_id=99999');
 
         $response->assertStatus(404)
             ->assertJsonStructure([
@@ -35,7 +35,7 @@ class ErrorHandlingTest extends TestCase
 
         $response = $this->withHeaders([
             'X-API-Key' => $apiKey->key,
-        ])->get('/api/flagbits/active'); // Missing trans_id
+        ])->get('/api/v1/flagbits/active'); // Missing trans_id
 
         $response->assertStatus(422); // Validation error
     }

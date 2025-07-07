@@ -15,7 +15,7 @@ class GetFlagbitHistoryRequest extends FormRequest
     {
         return [
             'trans_id' => 'required|integer|min:1',
-            'api_key' => 'nullable|string'
+            'api_key' => 'nullable'
         ];
     }
 

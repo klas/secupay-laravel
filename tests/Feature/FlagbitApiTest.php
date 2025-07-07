@@ -131,7 +131,7 @@ class FlagbitApiTest extends TestCase
 
     public function test_get_active_flagbits_returns_only_active_flags(): void
     {
-        $response = $this->getJson('/api/flagbits/active?trans_id=100', [
+        $response = $this->getJson('/api/v1/flagbits/active?trans_id=100', [
             'Authorization' => 'test_key_user1'
         ]);
 
@@ -156,7 +156,7 @@ class FlagbitApiTest extends TestCase
 
     public function test_get_active_flagbits_rejects_access_to_other_users_transactions(): void
     {
-        $response = $this->getJson('/api/flagbits/active?trans_id=200', [
+        $response = $this->getJson('/api/v1/flagbits/active?trans_id=200', [
             'Authorization' => 'test_key_user1'
         ]);
 
@@ -166,7 +166,7 @@ class FlagbitApiTest extends TestCase
 
     public function test_get_active_flagbits_validates_input(): void
     {
-        $response = $this->getJson('/api/flagbits/active', [
+        $response = $this->getJson('/api/v1/flagbits/active', [
             'Authorization' => 'test_key_user1'
         ]);
 
@@ -176,7 +176,7 @@ class FlagbitApiTest extends TestCase
 
     public function test_set_flagbit_validates_input(): void
     {
-        $response = $this->postJson('/api/flagbits/set', [
+        $response = $this->postJson('/api/v1/flagbits/set', [
             'trans_id' => 100
             // missing flagbit_id
         ], [
@@ -188,7 +188,7 @@ class FlagbitApiTest extends TestCase
 
     public function test_set_flagbit_validates_flagbit_range(): void
     {
-        $response = $this->postJson('/api/flagbits/set', [
+        $response = $this->postJson('/api/v1/flagbits/set', [
             'trans_id' => 100,
             'flagbit_id' => 999 // invalid range
         ], [
@@ -200,7 +200,7 @@ class FlagbitApiTest extends TestCase
 
     public function test_remove_flagbit_validates_input(): void
     {
-        $response = $this->deleteJson('/api/flagbits/remove', [
+        $response = $this->deleteJson('/api/v1/flagbits/remove', [
             'trans_id' => 100
             // missing flagbit_id
         ], [
@@ -212,7 +212,7 @@ class FlagbitApiTest extends TestCase
 
     public function test_get_flagbit_history_returns_all_historical_entries(): void
     {
-        $response = $this->getJson('/api/flagbits/history?trans_id=100', [
+        $response = $this->getJson('/api/v1/flagbits/history?trans_id=100', [
             'Authorization' => 'test_key_user1'
         ]);
 
@@ -243,7 +243,7 @@ class FlagbitApiTest extends TestCase
 
     public function test_get_flagbit_history_rejects_access_to_other_users_transactions(): void
     {
-        $response = $this->getJson('/api/flagbits/history?trans_id=200', [
+        $response = $this->getJson('/api/v1/flagbits/history?trans_id=200', [
             'Authorization' => 'test_key_user1'
         ]);
 

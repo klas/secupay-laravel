@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class FlagbitService
 {
-    public function getActiveFlagbits(int $transId, ApiKey $apiKey): array
+    public function getActiveFlagbits(int $transId, ?ApiKey $apiKey): array
     {
         $transaction = Transaktion::where('trans_id', $transId)
             ->where('vertrag_id', $apiKey->vertrag_id)
@@ -47,7 +47,7 @@ class FlagbitService
         })->toArray();
     }
 
-    public function setFlagbit(int $transId, int $flagbitId, ApiKey $apiKey): bool
+    public function setFlagbit(int $transId, int $flagbitId, ?ApiKey $apiKey): bool
     {
         $transaction = Transaktion::where('trans_id', $transId)
             ->where('vertrag_id', $apiKey->vertrag_id)
@@ -74,7 +74,7 @@ class FlagbitService
         });
     }
 
-    public function removeFlagbit(int $transId, int $flagbitId, ApiKey $apiKey): bool
+    public function removeFlagbit(int $transId, int $flagbitId, ?ApiKey $apiKey): bool
     {
         $transaction = Transaktion::where('trans_id', $transId)
             ->where('vertrag_id', $apiKey->vertrag_id)
@@ -101,7 +101,7 @@ class FlagbitService
         });
     }
 
-    public function getFlagbitHistory(int $transId, ApiKey $apiKey): array
+    public function getFlagbitHistory(int $transId, ?ApiKey $apiKey): array
     {
         $transaction = Transaktion::where('trans_id', $transId)
             ->where('vertrag_id', $apiKey->vertrag_id)

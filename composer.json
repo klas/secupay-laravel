@@ -5,6 +5,10 @@
     "description": "Laravel API Challenge - PHP Backend Developer Test",
     "keywords": ["laravel", "framework", "api", "php", "challenge"],
     "license": "MIT",
+    "repositories": [{
+        "type": "vcs",
+        "url": "https://github.com/klas/laravel-api-error-handler.git"
+    }],
     "require": {
         "php": "^8.4",
         "hamidreza2005/laravel-api-error-handler": "dev-main",

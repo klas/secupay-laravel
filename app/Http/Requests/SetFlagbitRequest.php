@@ -16,7 +16,7 @@ class SetFlagbitRequest extends FormRequest
         return [
             'trans_id' => 'required|integer|min:1',
             'flagbit_id' => 'required|integer|min:1|max:15',
-            'api_key' => 'nullable|string' // Add api_key support
+            'api_key' => 'nullable' // Add api_key support
         ];
     }
 
