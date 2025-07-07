@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SetFlagbitRequest extends FormRequest
+class RemoveFlagbitRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -16,7 +16,7 @@ class SetFlagbitRequest extends FormRequest
         return [
             'trans_id' => 'required|integer|min:1',
             'flagbit_id' => 'required|integer|min:1|max:15',
-            'api_key' => 'nullable|string' // Add api_key support
+            'api_key' => 'nullable|string'
         ];
     }
 
@@ -33,9 +33,6 @@ class SetFlagbitRequest extends FormRequest
         ];
     }
 
-    /**
-     * Get validated data with custom key mapping
-     */
     public function validatedData(): array
     {
         $validated = $this->validated();
