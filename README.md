@@ -61,11 +61,13 @@ The system implements a tiered security approach:
 
 ### Request & Response Security
 
-- **Input Validation**: All user inputs are validated against strict rules before processing
-- **Parameter Sanitization**: Input parameters are sanitized to prevent SQL injection and other attacks
-- **Rate Limiting**: API endpoints are protected against abuse with configurable rate limiting
-- **CORS Protection**: Cross-Origin Resource Sharing policies are properly configured
-- **JSON Encoding**: All responses use properly encoded JSON with appropriate HTTP status codes
+- **Input Validation**: Implemented using Laravel's built-in `Validator` facade and custom Form Request classes. Validation rules are defined for every endpoint to ensure all incoming data adheres to the required format, type, and constraints before being processed by the application logic.
+
+- **Parameter Sanitization & SQL Injection Prevention**: The application relies on Laravel's Eloquent ORM, which uses PDO parameter binding to automatically protect against SQL injection attacks. No raw SQL queries are used for operations involving user-provided data. Additional sanitization is performed for any data that might be rendered in logs or other outputs.
+
+- **Rate Limiting**: API endpoints are protected against brute-force attacks and abuse using Laravel's built-in rate limiting middleware. The rate limiter, named `api`, is configured in `app/Providers/AppServiceProvider.php` and applied to API routes. By default, it allows 60 requests per minute, identified by the authenticated user's ID or the requester's IP address.
+
+- **Secure Headers & JSON Encoding**: All API responses are sent as `JsonResponse` objects, which automatically set the `Content-Type` header to `application/json` and handle proper JSON encoding. Additional security headers (like `X-Content-Type-Options`, `X-Frame-Options`, etc.) can be configured via middleware to protect against common web vulnerabilities like clickjacking.
 
 ## Error Reporting & Logging
 
@@ -77,12 +79,11 @@ The system implements a tiered security approach:
 
 ## Coding Style & Standards
 
-- **PSR Standards**: Code follows PSR-1, PSR-4, and PSR-12 coding standards
-- **Type Hinting**: Strict type declarations are used throughout the codebase
-- **Documentation**: All classes and methods include PHPDoc blocks
-- **Automated Testing**: Comprehensive test suite using PHPUnit, Codeception, and Behat
-- **Code Quality Tools**: Utilizes static analysis tools for maintaining code quality
-- **Dependency Management**: Composer for managing PHP dependencies
+- **Code Style**: The codebase adheres to the PSR-12 coding standard. Compliance is automatically enforced using Laravel Pint.
+- **Modern PHP**: The project leverages modern PHP 8.x features, including strict type declarations for properties, parameters, and return types. This enhances code reliability and clarity.
+- **Self-Documenting Code**: The code is written to be self-explanatory, using clear and descriptive naming for classes, methods, and variables. This approach avoids the verbosity of PHPDoc blocks and relies on the language's type system for documentation.
+- **Automated Testing**: The project has a comprehensive test suite using Codeception and PHPUnit to ensure code quality and reliability.
+- **Dependency Management**: PHP dependencies are managed using Composer.
 
 ## Getting Started
 
@@ -101,4 +102,3 @@ or
 ```bash
 vendor/bin/codecept run
 ```
-
