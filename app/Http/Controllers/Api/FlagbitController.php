@@ -23,9 +23,6 @@ class FlagbitController extends Controller
         $this->flagbitService = $flagbitService;
     }
 
-    /**
-     * Get active flagbits for a transaction
-     */
     public function getActiveFlagbits(GetActiveFlagbitsRequest $request): JsonResponse
     {
         $data = $request->validatedData();
@@ -40,9 +37,6 @@ class FlagbitController extends Controller
             ->response();
     }
 
-    /**
-     * Set a flagbit for a transaction
-     */
     public function setFlagbit(SetFlagbitRequest $request): JsonResponse
     {
         $data = $request->validatedData();
@@ -63,9 +57,6 @@ class FlagbitController extends Controller
         return (new FlagbitActionResource($responseData))->response();
     }
 
-    /**
-     * Remove a flagbit from a transaction
-     */
     public function removeFlagbit(RemoveFlagbitRequest $request): JsonResponse
     {
         $data = $request->validatedData();
@@ -86,9 +77,6 @@ class FlagbitController extends Controller
         return (new FlagbitActionResource($responseData))->response();
     }
 
-    /**
-     * Get flagbit history for a transaction
-     */
     public function getFlagbitHistory(GetFlagbitHistoryRequest $request): JsonResponse
     {
         $data = $request->validatedData();

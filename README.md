@@ -94,7 +94,7 @@ Please see [INSTALL.md](INSTALL.md) for detailed installation instructions.
 ## Testing
 
 ### Automatic Testing
-This project includes automated PhpUnit tests and Http/integration tests. Run tests after installation with:
+This project includes automated PhpUnit unit and Http/Feature tests. Run tests after installation with:
 
 ```bash
 vendor/bin/sail artisan test
