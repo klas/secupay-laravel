@@ -124,12 +124,12 @@ class FlagbitServiceTest extends TestCase
         $transaktionMock = Mockery::mock('alias:App\Models\Transaktion');
         $transaktionMock->shouldReceive('where->where->first')->andReturn(new Transaktion());
 
-        // Mock DB facade
+        // Mock DB facade for the transaction and stored procedure call
         DB::shouldReceive('transaction')->andReturnUsing(function ($callback) {
             return $callback();
         });
-        DB::shouldReceive('statement')->once();
-        DB::shouldReceive('select')->once()->with('SELECT @error_code as error_code, @error_message')->andReturn([(object)['error_code' => 0, 'error_message' => '']]);
+        DB::shouldReceive('statement')->with('CALL stamd_aendern_erstellen_flagbit_ref(?, ?, ?, ?, ?, @error_code, @error_message)', [2, 1, 5, 2, $this->apiKey->bearbeiter_id]);
+        DB::shouldReceive('select')->with('SELECT @error_code as error_code, @error_message as error_message')->andReturn([(object)['error_code' => 0, 'error_message' => '']]);
 
         $result = $this->flagbitService->removeFlagbit(1, 5, $this->apiKey);
 

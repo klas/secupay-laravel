@@ -211,6 +211,58 @@ class FlagbitApiTest extends TestCase
         $response->assertStatus(422);
     }
 
+    public function test_remove_flagbit_successfully(): void
+    {
+        // Ensure the flagbit exists before removal
+        $this->assertDatabaseHas('stamd_flagbit_ref', [
+            'datensatz_id' => 100,
+            'flagbit' => 4
+        ]);
+
+        $response = $this->deleteJson('/api/v1/flagbits/remove', [
+            'trans_id' => 100,
+            'flagbit_id' => 4
+        ], [
+            'Authorization' => 'master_key_user1'
+        ]);
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'status' => 'success',
+                'data' => [
+                    'action' => 'remove',
+                    'trans_id' => 100,
+                    'flagbit_id' => 4
+                ]
+            ]);
+    }
+
+    public function test_remove_flagbit_requires_master_key(): void
+    {
+        $response = $this->deleteJson('/api/v1/flagbits/remove', [
+            'trans_id' => 100,
+            'flagbit_id' => 4
+        ], [
+            'Authorization' => 'test_key_user1' // Standard key
+        ]);
+
+        $response->assertStatus(403)
+                 ->assertJson(['error' => 'Master key required']);
+    }
+
+    public function test_remove_flagbit_rejects_access_to_other_users_transactions(): void
+    {
+        $response = $this->deleteJson('/api/v1/flagbits/remove', [
+            'trans_id' => 200, // Belongs to user 2
+            'flagbit_id' => 4
+        ], [
+            'Authorization' => 'master_key_user1' // Belongs to user 1
+        ]);
+
+        $response->assertStatus(404)
+                 ->assertJson(['message' => 'Transaction 200 not found or access denied']);
+    }
+
     public function test_get_flagbit_history_returns_all_historical_entries(): void
     {
         $response = $this->getJson('/api/v1/flagbits/history?trans_id=100', [
