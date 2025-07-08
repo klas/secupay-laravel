@@ -12,7 +12,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Mockery;
-use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class FlagbitServiceTest extends TestCase
@@ -43,8 +42,7 @@ class FlagbitServiceTest extends TestCase
         parent::tearDown();
     }
 
-    #[Test]
-    public function it_throws_exception_if_transaction_not_found_or_access_denied()
+    public function test_throws_exception_if_transaction_not_found_or_access_denied()
     {
         // Expect the exception
         $this->expectException(TransactionNotFoundException::class);
@@ -59,8 +57,7 @@ class FlagbitServiceTest extends TestCase
         $this->flagbitService->getActiveFlagbits(1, $this->apiKey);
     }
 
-    #[Test]
-    public function get_active_flagbits_returns_filtered_collection()
+    public function test_get_active_flagbits_returns_filtered_collection()
     {
         // Mock a transaction so validation passes
         $transaktionMock = Mockery::mock('alias:App\Models\Transaktion');
@@ -85,8 +82,7 @@ class FlagbitServiceTest extends TestCase
         $this->assertCount(1, $result); // Only the active one should be returned
     }
 
-    #[Test]
-    public function set_flagbit_successfully()
+    public function test_set_flagbit_successfully()
     {
         // Mock transaction validation
         $transaktionMock = Mockery::mock('alias:App\Models\Transaktion');
@@ -104,8 +100,8 @@ class FlagbitServiceTest extends TestCase
         $this->assertTrue($result);
     }
 
-    #[Test]
-    public function set_flagbit_throws_exception_on_db_error()
+
+    public function test_set_flagbit_throws_exception_on_db_error()
     {
         $this->expectException(InvalidFlagbitOperationException::class);
 
@@ -123,8 +119,7 @@ class FlagbitServiceTest extends TestCase
         $this->flagbitService->setFlagbit(1, 5, $this->apiKey);
     }
 
-    #[Test]
-    public function remove_flagbit_successfully()
+    public function test_remove_flagbit_successfully()
     {
         // Mock transaction validation
         $transaktionMock = Mockery::mock('alias:App\Models\Transaktion');
@@ -142,8 +137,7 @@ class FlagbitServiceTest extends TestCase
         $this->assertTrue($result);
     }
 
-    #[Test]
-    public function remove_flagbit_throws_exception_on_db_error()
+    public function test_remove_flagbit_throws_exception_on_db_error()
     {
         $this->expectException(InvalidFlagbitOperationException::class);
 

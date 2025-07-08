@@ -13,7 +13,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Mockery;
-use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class FlagbitControllerTest extends TestCase
@@ -42,8 +41,7 @@ class FlagbitControllerTest extends TestCase
         parent::tearDown();
     }
 
-    #[Test]
-    public function get_active_flagbits_returns_correct_json_response()
+    public function test_get_active_flagbits_returns_correct_json_response()
     {
         $request = Mockery::mock(GetActiveFlagbitsRequest::class);
         $request->shouldReceive('validatedData')->andReturn(['trans_id' => 1, 'api_key' => $this->apiKey]);
@@ -60,8 +58,7 @@ class FlagbitControllerTest extends TestCase
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    #[Test]
-    public function set_flagbit_returns_correct_json_response()
+    public function test_set_flagbit_returns_correct_json_response()
     {
         $requestData = ['trans_id' => 1, 'flagbit_id' => 5];
         $request = Mockery::mock(SetFlagbitRequest::class);
@@ -87,8 +84,7 @@ class FlagbitControllerTest extends TestCase
         $this->assertArrayHasKey('timestamp', $responseData['data']);
     }
 
-    #[Test]
-    public function remove_flagbit_returns_correct_json_response()
+    public function test_remove_flagbit_returns_correct_json_response()
     {
         $requestData = ['trans_id' => 1, 'flagbit_id' => 5];
         $request = Mockery::mock(RemoveFlagbitRequest::class);
@@ -114,8 +110,7 @@ class FlagbitControllerTest extends TestCase
         $this->assertArrayHasKey('timestamp', $responseData['data']);
     }
 
-    #[Test]
-    public function get_flagbit_history_returns_correct_json_response()
+    public function test_get_flagbit_history_returns_correct_json_response()
     {
         $request = Mockery::mock(GetFlagbitHistoryRequest::class);
         $request->shouldReceive('validatedData')->andReturn(['trans_id' => 1, 'api_key' => $this->apiKey]);

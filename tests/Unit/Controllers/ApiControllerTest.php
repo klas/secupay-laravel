@@ -5,15 +5,13 @@ namespace Tests\Unit\Controllers;
 use App\Http\Controllers\Api\ApiController;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\JsonResponse;
-use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class ApiControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    #[Test]
-    public function get_server_time_returns_correct_json_response()
+    public function test_get_server_time_returns_correct_json_response()
     {
         $controller = new ApiController();
         $response = $controller->getServerTime();
