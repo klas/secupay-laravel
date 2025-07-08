@@ -13,6 +13,7 @@ class Transaktion extends Model
     public $timestamps = false;
 
     protected $fillable = [
+        'trans_id',
         'produkt_id',
         'vertrag_id',
         'Betrag',

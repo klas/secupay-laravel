@@ -18,8 +18,8 @@ class FlagbitResource extends JsonResource
             'valid_from' => $this->whenLoaded('zeitraum', $this->zeitraum?->von),
             'valid_to' => $this->whenLoaded('zeitraum', $this->zeitraum?->bis),
             'is_active' => $this->when(
-                $this->relationLoaded('zeitraum'),
-                fn() => $this->isActive()
+                $this->whenLoaded('zeitraum'),
+                $this->isActive()
             )
         ];
     }

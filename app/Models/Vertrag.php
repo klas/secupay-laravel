@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Vertrag extends Model
 {
+    use HasFactory;
+
     protected $table = 'vertragsverw_vertrag';
     protected $primaryKey = 'vertrag_id';
     public $timestamps = false;

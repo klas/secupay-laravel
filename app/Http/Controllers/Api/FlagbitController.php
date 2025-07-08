@@ -32,7 +32,7 @@ class FlagbitController extends Controller
 
         $flagbits = $this->flagbitService->getActiveFlagbits(
             $data['trans_id'],
-            $data['api_key']
+            ($data['api_key'] instanceof(ApiKey::class)) ? $data['api_key'] : null
         );
 
         return (new FlagbitCollectionResource($flagbits))

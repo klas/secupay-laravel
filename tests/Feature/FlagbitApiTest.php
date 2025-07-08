@@ -137,18 +137,19 @@ class FlagbitApiTest extends TestCase
 
         $response->assertStatus(200)
                 ->assertJsonStructure([
-                    'trans_id',
-                    'active_flagbits' => [
-                        '*' => [
-                            'flagbit_id',
-                            'name',
-                            'description',
-                            'set_at'
+                    'data' => [
+                        'trans_id',
+                        'active_flagbits' => [
+                            '*' => [
+                                'flagbit_id',
+                                'name',
+                                'description',
+                                'set_at'
+                            ]
                         ]
-                    ]
-                ]);
+                ]]);
 
-        $data = $response->json();
+        $data = $response->json()['data'];
         $this->assertEquals(100, $data['trans_id']);
         $this->assertCount(1, $data['active_flagbits']);
         $this->assertEquals(4, $data['active_flagbits'][0]['flagbit_id']);
@@ -161,7 +162,7 @@ class FlagbitApiTest extends TestCase
         ]);
 
         $response->assertStatus(404)
-                ->assertJson(['error' => 'Transaction not found or access denied']);
+                ->assertJson(['message' => 'Transaction 200 not found or access denied']);
     }
 
     public function test_get_active_flagbits_validates_input(): void
@@ -171,7 +172,7 @@ class FlagbitApiTest extends TestCase
         ]);
 
         $response->assertStatus(422)
-                ->assertJsonStructure(['error', 'details']);
+                ->assertJson(['message' => 'Transaction ID is required', 'success' => false]);
     }
 
     public function test_set_flagbit_validates_input(): void
@@ -218,23 +219,24 @@ class FlagbitApiTest extends TestCase
 
         $response->assertStatus(200)
                 ->assertJsonStructure([
-                    'trans_id',
-                    'flagbit_history' => [
-                        '*' => [
-                            'flagbit_id',
-                            'name',
-                            'description',
-                            'valid_from',
-                            'valid_to',
-                            'set_at',
-                            'is_active'
+                    'data' => [
+                        'trans_id',
+                        'flagbit_history' => [
+                            '*' => [
+                                'flagbit_id',
+                                'name',
+                                'description',
+                                'valid_from',
+                                'valid_to',
+                                'set_at',
+                            ]
                         ]
-                    ]
-                ]);
+                ]]);
 
-        $data = $response->json();
+        $data = $response->json()['data'];
         $this->assertEquals(100, $data['trans_id']);
         $this->assertCount(2, $data['flagbit_history']);
+
 
         // Check that is_active flag is correctly set
         $activeCount = collect($data['flagbit_history'])->where('is_active', true)->count();
@@ -248,6 +250,6 @@ class FlagbitApiTest extends TestCase
         ]);
 
         $response->assertStatus(404)
-                ->assertJson(['error' => 'Transaction not found or access denied']);
+            ->assertJson(['message' => 'Transaction 200 not found or access denied']);
     }
 }

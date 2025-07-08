@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ApiKey extends Model
 {
+    use HasFactory;
+
     protected $table = 'api_apikey';
     protected $primaryKey = 'apikey_id';
     public $timestamps = false;

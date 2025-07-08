@@ -19,7 +19,7 @@ class ApiKeyAuth
 
         $token = str_replace('Bearer ', '', $token);
 
-        $apiKey = ApiKey::with('zeitraum', 'vertrag')->where('apikey', $token)->first();
+        $apiKey = ApiKey::with('zeitraum', 'vertrag')->where('apikey', '=', $token)->first();
 
         if (!$apiKey || !$apiKey->isValid()) {
             return response()->json(['error' => 'Invalid or expired API key'], 401);

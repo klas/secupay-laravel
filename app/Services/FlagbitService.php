@@ -8,11 +8,12 @@ use App\Models\FlagbitRef;
 use App\Constants\DataFlag;
 use App\Exceptions\TransactionNotFoundException;
 use App\Exceptions\InvalidFlagbitOperationException;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class FlagbitService
 {
-    public function getActiveFlagbits(int $transId, ?ApiKey $apiKey): array
+    public function getActiveFlagbits(int $transId, ?ApiKey $apiKey): Collection
     {
         $transaction = Transaktion::where('trans_id', $transId)
             ->where('vertrag_id', $apiKey->vertrag_id)
@@ -37,14 +38,7 @@ class FlagbitService
             ->where('vorgaben_zeitraum.bis', '>=', $now)
             ->get();
 
-        return $flagbits->map(function ($flagbit) {
-            return [
-                'flagbit_id' => $flagbit->flagbit,
-                'name' => DataFlag::getFlagName($flagbit->flagbit),
-                'description' => $flagbit->beschreibung,
-                'set_at' => $flagbit->set_at
-            ];
-        })->toArray();
+        return $flagbits;
     }
 
     public function setFlagbit(int $transId, int $flagbitId, ?ApiKey $apiKey): bool
@@ -101,7 +95,7 @@ class FlagbitService
         });
     }
 
-    public function getFlagbitHistory(int $transId, ?ApiKey $apiKey): array
+    public function getFlagbitHistory(int $transId, ?ApiKey $apiKey): Collection
     {
         $transaction = Transaktion::where('trans_id', $transId)
             ->where('vertrag_id', $apiKey->vertrag_id)
@@ -125,19 +119,6 @@ class FlagbitService
             ->orderBy('stamd_flagbit_ref.timestamp', 'desc')
             ->get();
 
-        return $history->map(function ($item) {
-            $now = now();
-            $isActive = $now->between($item->valid_from, $item->valid_to);
-
-            return [
-                'flagbit_id' => $item->flagbit,
-                'name' => DataFlag::getFlagName($item->flagbit),
-                'description' => $item->beschreibung,
-                'valid_from' => $item->valid_from,
-                'valid_to' => $item->valid_to,
-                'set_at' => $item->set_at,
-                'is_active' => $isActive
-            ];
-        })->toArray();
+        return $history;
     }
 }
