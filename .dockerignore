@@ -13,3 +13,5 @@ storage/framework/views/*
 .phpunit.result.cache
 docker-compose.override.yml
 phpunit.xml
+public/hot
+public/storage
