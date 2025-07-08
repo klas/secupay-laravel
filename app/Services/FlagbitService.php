@@ -17,22 +17,11 @@ class FlagbitService
     {
         $this->validateTransactionAccess($transId, $apiKey);
 
-        $now = now();
-
-        $flagbits = FlagbitRef::select([
-            'stamd_flagbit_ref.flagbit',
-            'vorgaben_flagbit.beschreibung',
-            'stamd_flagbit_ref.timestamp as set_at'
-        ])
-            ->join('vorgaben_zeitraum', 'vorgaben_zeitraum.zeitraum_id', '=', 'stamd_flagbit_ref.zeitraum_id')
-            ->leftJoin('vorgaben_flagbit', 'vorgaben_flagbit.flagbit_id', '=', 'stamd_flagbit_ref.flagbit')
-            ->where('stamd_flagbit_ref.datensatz_typ_id', 2)
-            ->where('stamd_flagbit_ref.datensatz_id', $transId)
-            ->where('vorgaben_zeitraum.von', '<=', $now)
-            ->where('vorgaben_zeitraum.bis', '>=', $now)
-            ->get();
-
-        return $flagbits;
+        return FlagbitRef::with(['zeitraum', 'flagbitDefinition'])
+            ->where('datensatz_typ_id', 2)
+            ->where('datensatz_id', $transId)
+            ->get()
+            ->filter->isActive()->values();
     }
 
     public function setFlagbit(int $transId, int $flagbitId, ?ApiKey $apiKey): bool
@@ -81,21 +70,11 @@ class FlagbitService
     {
         $this->validateTransactionAccess($transId, $apiKey);
 
-        $history = FlagbitRef::select([
-            'stamd_flagbit_ref.flagbit',
-            'vorgaben_flagbit.beschreibung',
-            'vorgaben_zeitraum.von as valid_from',
-            'vorgaben_zeitraum.bis as valid_to',
-            'stamd_flagbit_ref.timestamp as set_at'
-        ])
-            ->join('vorgaben_zeitraum', 'vorgaben_zeitraum.zeitraum_id', '=', 'stamd_flagbit_ref.zeitraum_id')
-            ->leftJoin('vorgaben_flagbit', 'vorgaben_flagbit.flagbit_id', '=', 'stamd_flagbit_ref.flagbit')
-            ->where('stamd_flagbit_ref.datensatz_typ_id', 2)
-            ->where('stamd_flagbit_ref.datensatz_id', $transId)
-            ->orderBy('stamd_flagbit_ref.timestamp', 'desc')
+        return FlagbitRef::with(['zeitraum', 'flagbitDefinition'])
+            ->where('datensatz_typ_id', 2)
+            ->where('datensatz_id', $transId)
+            ->orderBy('timestamp', 'desc')
             ->get();
-
-        return $history;
     }
 
     private function validateTransactionAccess(int $transId, ?ApiKey $apiKey): Transaktion

@@ -26,6 +26,7 @@ return new class extends Migration
     {
         // Create api_erstelle_apikey procedure
         DB::unprepared('
+        DROP PROCEDURE IF EXISTS `api_erstelle_apikey`;
              CREATE PROCEDURE `api_erstelle_apikey`(IN IN_vertrag_id INT(11),
               IN IN_bearbeiter_id INT(11),
               OUT OUT_fehler INT(11))
@@ -112,6 +113,7 @@ return new class extends Migration
 
         // Create erstelle_zeitraum procedure
         DB::unprepared('
+        DROP PROCEDURE IF EXISTS `erstelle_zeitraum`;
             CREATE PROCEDURE `erstelle_zeitraum`(IN IN_von DATETIME,
               IN IN_bis DATETIME,
               OUT OUT_zeitraum_id INT UNSIGNED)
@@ -153,6 +155,7 @@ return new class extends Migration
 
         // Create stamd_aendern_erstellen_flagbit_ref procedure
         DB::unprepared('
+        DROP PROCEDURE IF EXISTS `stamd_aendern_erstellen_flagbit_ref`;
             CREATE PROCEDURE `stamd_aendern_erstellen_flagbit_ref`(IN IN_datensatz_typ_id INT UNSIGNED,
               IN IN_datensatz_id INT UNSIGNED,
               IN IN_flagbit BIGINT(20),
@@ -330,6 +333,7 @@ return new class extends Migration
 
         // Create stamd_flagbit_setzen procedure
         DB::unprepared('
+        DROP PROCEDURE IF EXISTS `stamd_flagbit_setzen`;
             CREATE PROCEDURE stamd_flagbit_setzen(
                 IN IN_datensatz_typ_id INT(11),
                 IN IN_datensatz_id INT(11),
