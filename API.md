@@ -30,7 +30,7 @@ Get current server time.
 Get active flagbits for a transaction.
 
 **Parameters:**
-- `transaction_id` (required): The ID of the transaction.
+- `trans_id` (required): The ID of the transaction.
 
 **Headers:**
 - `Authorization`: A valid standard or master API key.
@@ -38,7 +38,7 @@ Get active flagbits for a transaction.
 **Response:**
 ```json
 {
-  "transaction_id": 3,
+  "trans_id": 3,
   "active_flagbits": [
     {
       "flagbit_id": 12,
@@ -54,7 +54,7 @@ Get active flagbits for a transaction.
 Get complete flagbit history for a transaction.
 
 **Parameters:**
-- `transaction_id` (required): The ID of the transaction.
+- `trans_id` (required): The ID of the transaction.
 
 **Headers:**
 - `Authorization`: A valid standard or master API key.
@@ -62,7 +62,7 @@ Get complete flagbit history for a transaction.
 **Response:**
 ```json
 {
-  "transaction_id": 3,
+  "trans_id": 3,
   "flagbit_history": [
     {
       "flagbit_id": 12,
@@ -87,7 +87,7 @@ Set a flagbit for a transaction.
 **Body:**
 ```json
 {
-  "transaction_id": 3,
+  "trans_id": 4,
   "flagbit_id": 5
 }
 ```
@@ -96,7 +96,7 @@ Set a flagbit for a transaction.
 ```json
 {
   "message": "Flagbit set successfully",
-  "transaction_id": 3,
+  "trans_id": 4,
   "flagbit_id": 5
 }
 ```
@@ -111,7 +111,7 @@ Remove a flagbit from a transaction.
 **Body:**
 ```json
 {
-  "transaction_id": 3,
+  "trans_id": 4,
   "flagbit_id": 5
 }
 ```
@@ -120,7 +120,7 @@ Remove a flagbit from a transaction.
 ```json
 {
   "message": "Flagbit removed successfully",
-  "transaction_id": 3,
+  "trans_id": 4,
   "flagbit_id": 5
 }
 ```
@@ -153,7 +153,7 @@ Remove a flagbit from a transaction.
 {
   "error": "Validation failed",
   "details": {
-    "transaction_id": ["The transaction id field is required."]
+    "trans_id": ["The transaction id field is required."]
   }
 }
 ```

@@ -1,5 +1,8 @@
-# Secupay Transaction Flagging API
+# Secucard Transaction Flagging API
 
+## About This Project
+
+This is a Laravel-based API solution developed as part of the PHP backend developer technical assessment for secucard GmbH. The implementation demonstrates handling of database interactions with stored procedures, RESTful API design, comprehensive testing, and security best practices.
 ## Project Overview
 
 This is a specialized API service that manages transaction flags (called "flagbits") for financial transactions. The system allows authorized users to add or remove status indicators to transactions, providing a way to mark transactions with specific attributes such as "verified", "suspicious", or "pending review".
@@ -8,7 +11,7 @@ This is a specialized API service that manages transaction flags (called "flagbi
 
 This application provides a secure way to:
 
-1. **View active flags** on any transaction (with proper authorization)
+1. **View active flags** on any transaction of the user matching the API key
 2. **View flag history** to see when flags were added or removed from transactions
 3. **Set new flags** on transactions (requires elevated permissions)
 4. **Remove flags** from transactions (requires elevated permissions)
@@ -24,6 +27,15 @@ This is a PHP application built using the Laravel framework (v12.19.3), but conf
 - **Stored Procedures**: Uses database stored procedures for critical operations like setting/removing flags
 - **Temporal Data**: Maintains historical records of all flagbit changes with effective time periods
 
+## Database Schema
+
+The application works with the following key tables:
+- `api_apikey` - Stores API access tokens
+- `vorgaben_zeitraum` - Time period specifications for validation
+- `transaktion_transaktionen` - Transaction records
+- `stamd_flagbit_ref` - FlagBit references for transactions
+- `vorgaben_flagbit` - List of possible FlagBits
+- 
 ### Application Structure
 
 - **Controllers**: Handle incoming HTTP requests and return appropriate responses
@@ -74,17 +86,15 @@ The system implements a tiered security approach:
 ## Error Reporting & Logging
 
 - **Structured Error Responses**: All API errors return a consistent JSON structure with proper HTTP status codes
-- **Detailed Logging**: Application errors are logged with detailed context information using Monolog
+- **Detailed Logging**: Application errors are logged with detailed context information
 - **Exception Handling**: Custom exception handlers capture and report errors appropriately
-- **Monitoring**: Integration with monitoring systems for real-time error alerting
-- **Audit Trail**: Critical operations are logged with user information for audit purposes
 
 ## Coding Style & Standards
 
 - **Code Style**: The codebase adheres to the PSR-12 coding standard. Compliance is automatically enforced using Laravel Pint.
 - **Modern PHP**: The project leverages modern PHP 8.x features, including strict type declarations for properties, parameters, and return types. This enhances code reliability and clarity.
-- **Self-Documenting Code**: The code is written to be self-explanatory, using clear and descriptive naming for classes, methods, and variables. This approach avoids the verbosity of PHPDoc blocks and relies on the language's type system for documentation.
-- **Automated Testing**: The project has a comprehensive test suite using Codeception and PHPUnit to ensure code quality and reliability.
+- **Self-Documenting Code**: **The code is written to be self-explanatory, using clear and descriptive naming for classes, methods, and variables. This approach avoids the verbosity of PHPDoc blocks and relies on the language's type system for documentation.**
+- **Automated Testing**: The project has a comprehensive test suite using Laravel PHPUnit integration to ensure code quality and reliability.
 - **Dependency Management**: PHP dependencies are managed using Composer.
 
 ## Getting Started
@@ -104,6 +114,4 @@ vendor/bin/sail artisan test
 
 Import the Postman collection from `postman/Laravel_API_Challenge.postman_collection.json` for immediate testing.
 
-Sample API keys:
-- Regular: `9faa37b23f350c516e3589e60083d10cd368df01`
-- Master: `8067562d7138d72501485941246cf9b229c3a46a`
+Sample API keys available after Seeding the database - see [INSTALL.md](INSTALL.md) for details

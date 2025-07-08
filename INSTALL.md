@@ -1,5 +1,11 @@
 # Installation Guide
 
+## Requirements
+
+- PHP ^8.x (8.4 will be used inside docker container)
+- Docker Desktop (for Laravel Sail)
+- Composer
+
 ## Quick Installation
 
 * **Clone/Download the project**
@@ -12,3 +18,8 @@
 * **Start the Containers**: `vendor/bin/sail up -d`
 * **Run migrations und seeders**: `vendor/bin/sail artisan migrate:fresh --seed`
 
+## Test Data
+
+After running migrations and seeders, the following test API keys are available:
+- Regular API key: `9faa37b23f350c516e3589e60083d10cd368df01` (vertrag_id: 3)
+- Master API key: `8067562d7138d72501485941246cf9b229c3a46a` (vertrag_id: 2, ist_masterkey: 1)
