@@ -93,16 +93,11 @@ Please see [INSTALL.md](INSTALL.md) for detailed installation instructions.
 
 ## Testing
 
-This project includes automated tests using Codeception. Run tests with:
-
 ### Automatic Testing
+This project includes automated PhpUnit tests and Http/integration tests. Run tests after installation with:
 
 ```bash
-# PHPUnit tests
-php artisan test
-
-# Codeception tests (after setup)
-vendor/bin/codecept run
+vendor/bin/sail artisan test
 ```
 
 ### API Usage

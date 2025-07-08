@@ -8,6 +8,7 @@ paths:
 settings:
     shuffle: false
     lint: true
+namespace: Tests
 extensions:
     enabled:
         - Codeception\Extension\RunFailed

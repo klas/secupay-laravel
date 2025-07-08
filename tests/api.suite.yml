@@ -6,4 +6,4 @@ modules:
         - REST:
             url: http://localhost
             depends: Laravel
-        - \Helper\Api
+        - \Tests\Helper\Api

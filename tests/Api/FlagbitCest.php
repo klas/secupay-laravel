@@ -1,4 +1,5 @@
 <?php
+namespace Tests\Api;
 
 class FlagbitCest
 {
@@ -12,7 +13,7 @@ class FlagbitCest
 
     public function getActiveFlagbitsWithoutAuthFails(ApiTester $I)
     {
-        $I->sendGET('/api/flagbits/active?trans_id=1');
+        $I->sendGET('/api/v1/flagbits/active?trans_id=1');
         $I->seeResponseCodeIs(401);
         $I->seeResponseContainsJson(['error' => 'API key required']);
     }
@@ -20,7 +21,7 @@ class FlagbitCest
     public function getActiveFlagbitsWithValidKeyWorks(ApiTester $I)
     {
         $I->haveHttpHeader('Authorization', $this->validApiKey);
-        $I->sendGET('/api/flagbits/active?trans_id=1');
+        $I->sendGET('/api/v1/flagbits/active?trans_id=1');
         $I->dontSeeResponseCodeIs(401);
         $I->dontSeeResponseCodeIs(403);
     }
@@ -28,7 +29,7 @@ class FlagbitCest
     public function setFlagbitRequiresMasterKey(ApiTester $I)
     {
         $I->haveHttpHeader('Authorization', $this->validApiKey);
-        $I->sendPOST('/api/flagbits/set', ['trans_id' => 1, 'flagbit_id' => 4]);
+        $I->sendPOST('/api/v1/flagbits/set', ['trans_id' => 1, 'flagbit_id' => 4]);
         $I->seeResponseCodeIs(403);
         $I->seeResponseContainsJson(['error' => 'Master key required']);
     }
@@ -36,7 +37,7 @@ class FlagbitCest
     public function setFlagbitWithMasterKeyWorks(ApiTester $I)
     {
         $I->haveHttpHeader('Authorization', $this->masterApiKey);
-        $I->sendPOST('/api/flagbits/set', ['trans_id' => 1, 'flagbit_id' => 4]);
+        $I->sendPOST('/api/v1/flagbits/set', ['trans_id' => 1, 'flagbit_id' => 4]);
         $I->dontSeeResponseCodeIs(401);
         $I->dontSeeResponseCodeIs(403);
     }

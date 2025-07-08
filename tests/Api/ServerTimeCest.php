@@ -1,4 +1,5 @@
 <?php
+namespace Tests\Api;
 
 class ServerTimeCest
 {
@@ -9,7 +10,7 @@ class ServerTimeCest
 
     public function getServerTimeTest(ApiTester $I)
     {
-        $I->sendGET('/api/time');
+        $I->sendGET('/api/v1/time');
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
         $I->seeResponseContainsJson([]);
