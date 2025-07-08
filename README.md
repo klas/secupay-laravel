@@ -44,6 +44,8 @@ The API provides these main endpoints:
 - `DELETE /api/v1/flagbits/remove` - Remove a flag from a transaction (requires master API key)
 - `GET /api/v1/time` - Get the current server time
 
+Please see [API.md](API.md) for detailed information.
+
 ## Security Model
 
 The system implements a tiered security approach:
@@ -93,12 +95,20 @@ Please see [INSTALL.md](INSTALL.md) for detailed installation instructions.
 
 This project includes automated tests using Codeception. Run tests with:
 
+### Automatic Testing
+
 ```bash
+# PHPUnit tests
 php artisan test
-```
 
-or
-
-```bash
+# Codeception tests (after setup)
 vendor/bin/codecept run
 ```
+
+### API Usage
+
+Import the Postman collection from `postman/Laravel_API_Challenge.postman_collection.json` for immediate testing.
+
+Sample API keys:
+- Regular: `9faa37b23f350c516e3589e60083d10cd368df01`
+- Master: `8067562d7138d72501485941246cf9b229c3a46a`
