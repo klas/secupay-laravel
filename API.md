@@ -2,41 +2,43 @@
 
 ## Authentication
 
-All protected endpoints require an API key in the Authorization header:
+All protected endpoints require an API key in the `Authorization` header. You can send it directly or use the `Bearer` scheme.
 
 ```
 Authorization: your_api_key_here
+
 # or
+
 Authorization: Bearer your_api_key_here
 ```
 
 ## Endpoints
 
-### GET /api/time
+### GET /api/v1/time
 Get current server time.
 
 **Response:**
 ```json
 {
-  "server_time": "2025-07-07T12:00:00.000000Z",
-  "timestamp": 1720353600,
+  "server_time": "2025-07-08T21:38:58.000000Z",
+  "timestamp": 1720474738,
   "timezone": "UTC"
 }
 ```
 
-### GET /api/flagbits/active
+### GET /api/v1/flagbits/active
 Get active flagbits for a transaction.
 
 **Parameters:**
-- `trans_id` (required): Transaction ID
+- `transaction_id` (required): The ID of the transaction.
 
 **Headers:**
-- `Authorization`: Valid API key
+- `Authorization`: A valid standard or master API key.
 
 **Response:**
 ```json
 {
-  "trans_id": 3,
+  "transaction_id": 3,
   "active_flagbits": [
     {
       "flagbit_id": 12,
@@ -48,58 +50,19 @@ Get active flagbits for a transaction.
 }
 ```
 
-### POST /api/flagbits/set
-Set a flagbit for a transaction.
-
-**Headers:**
-- `Authorization`: Master API key
-- `Content-Type`: application/json
-
-**Body:**
-```json
-{
-  "trans_id": 3,
-  "flagbit_id": 5
-}
-```
-
-**Response:**
-```json
-{
-  "message": "Flagbit set successfully",
-  "trans_id": 3,
-  "flagbit_id": 5
-}
-```
-
-### DELETE /api/flagbits/remove
-Remove a flagbit from a transaction.
-
-**Headers:**
-- `Authorization`: Master API key
-- `Content-Type`: application/json
-
-**Body:**
-```json
-{
-  "trans_id": 3,
-  "flagbit_id": 5
-}
-```
-
-### GET /api/flagbits/history
+### GET /api/v1/flagbits/history
 Get complete flagbit history for a transaction.
 
 **Parameters:**
-- `trans_id` (required): Transaction ID
+- `transaction_id` (required): The ID of the transaction.
 
 **Headers:**
-- `Authorization`: Valid API key
+- `Authorization`: A valid standard or master API key.
 
 **Response:**
 ```json
 {
-  "trans_id": 3,
+  "transaction_id": 3,
   "flagbit_history": [
     {
       "flagbit_id": 12,
@@ -111,6 +74,54 @@ Get complete flagbit history for a transaction.
       "is_active": true
     }
   ]
+}
+```
+
+### POST /api/v1/flagbits/set
+Set a flagbit for a transaction.
+
+**Headers:**
+- `Authorization`: A valid master API key.
+- `Content-Type`: application/json
+
+**Body:**
+```json
+{
+  "transaction_id": 3,
+  "flagbit_id": 5
+}
+```
+
+**Response:**
+```json
+{
+  "message": "Flagbit set successfully",
+  "transaction_id": 3,
+  "flagbit_id": 5
+}
+```
+
+### DELETE /api/v1/flagbits/remove
+Remove a flagbit from a transaction.
+
+**Headers:**
+- `Authorization`: A valid master API key.
+- `Content-Type`: application/json
+
+**Body:**
+```json
+{
+  "transaction_id": 3,
+  "flagbit_id": 5
+}
+```
+
+**Response:**
+```json
+{
+  "message": "Flagbit removed successfully",
+  "transaction_id": 3,
+  "flagbit_id": 5
 }
 ```
 
@@ -142,7 +153,7 @@ Get complete flagbit history for a transaction.
 {
   "error": "Validation failed",
   "details": {
-    "trans_id": ["The trans id field is required."]
+    "transaction_id": ["The transaction id field is required."]
   }
 }
 ```

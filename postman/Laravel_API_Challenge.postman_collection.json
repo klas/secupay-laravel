@@ -8,7 +8,7 @@
 	"variable": [
 		{
 			"key": "baseUrl",
-			"value": "http://localhost:8000/api",
+			"value": "http://localhost/api/v1",
 			"type": "string"
 		},
 		{
@@ -24,19 +24,23 @@
 	],
 	"item": [
 		{
-			"name": "Step 1 - Server Time",
+			"name": "Get Server Time",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
 					"raw": "{{baseUrl}}/time",
-					"host": ["{{baseUrl}}"],
-					"path": ["time"]
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"time"
+					]
 				}
 			}
 		},
 		{
-			"name": "Step 4 - Get Active Flagbits",
+			"name": "Get Active Flagbits",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -47,15 +51,54 @@
 					}
 				],
 				"url": {
-					"raw": "{{baseUrl}}/flagbits/active?trans_id=3",
-					"host": ["{{baseUrl}}"],
-					"path": ["flagbits", "active"],
-					"query": [{"key": "trans_id", "value": "3"}]
+					"raw": "{{baseUrl}}/flagbits/active?transaction_id=3",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"flagbits",
+						"active"
+					],
+					"query": [
+						{
+							"key": "transaction_id",
+							"value": "3"
+						}
+					]
 				}
 			}
 		},
 		{
-			"name": "Step 5 - Set Flagbit",
+			"name": "Get Flagbit History",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/flagbits/history?transaction_id=3",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"flagbits",
+						"history"
+					],
+					"query": [
+						{
+							"key": "transaction_id",
+							"value": "3"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "Set Flagbit (Master Key)",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -72,17 +115,22 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"trans_id\": 3,\n    \"flagbit_id\": 5\n}"
+					"raw": "{\n    \"transaction_id\": 3,\n    \"flagbit_id\": 5\n}"
 				},
 				"url": {
 					"raw": "{{baseUrl}}/flagbits/set",
-					"host": ["{{baseUrl}}"],
-					"path": ["flagbits", "set"]
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"flagbits",
+						"set"
+					]
 				}
 			}
 		},
 		{
-			"name": "Step 6 - Remove Flagbit",
+			"name": "Remove Flagbit (Master Key)",
 			"request": {
 				"method": "DELETE",
 				"header": [
@@ -99,31 +147,17 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"trans_id\": 3,\n    \"flagbit_id\": 5\n}"
+					"raw": "{\n    \"transaction_id\": 3,\n    \"flagbit_id\": 5\n}"
 				},
 				"url": {
 					"raw": "{{baseUrl}}/flagbits/remove",
-					"host": ["{{baseUrl}}"],
-					"path": ["flagbits", "remove"]
-				}
-			}
-		},
-		{
-			"name": "Step 7 - Get Flagbit History",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{apiKey}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "{{baseUrl}}/flagbits/history?trans_id=3",
-					"host": ["{{baseUrl}}"],
-					"path": ["flagbits", "history"],
-					"query": [{"key": "trans_id", "value": "3"}]
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"flagbits",
+						"remove"
+					]
 				}
 			}
 		}
