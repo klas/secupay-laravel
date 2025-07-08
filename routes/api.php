@@ -19,3 +19,12 @@ Route::prefix('v1')->group(function () {
 	});
 });
 
+// Add documentation route
+Route::get('/', function () {
+    return response()->json([
+        'name' => 'Secupay API',
+        'version' => '1.0',
+        'documentation' => '/api/documentation',
+    ]);
+});
+

@@ -1,61 +1,104 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Secupay Transaction Flagging API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Project Overview
 
-## About Laravel
+This is a specialized API service that manages transaction flags (called "flagbits") for financial transactions. The system allows authorized users to add or remove status indicators to transactions, providing a way to mark transactions with specific attributes such as "verified", "suspicious", or "pending review".
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## What This Application Does
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+This application provides a secure way to:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. **View active flags** on any transaction (with proper authorization)
+2. **View flag history** to see when flags were added or removed from transactions
+3. **Set new flags** on transactions (requires elevated permissions)
+4. **Remove flags** from transactions (requires elevated permissions)
 
-## Learning Laravel
+## Technical Architecture
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+This is a PHP application built using the Laravel framework (v12.19.3), but configured specifically as an API-only service (no frontend). The application follows a modern, layered architecture pattern.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Key Components
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **API Keys**: All requests require API key authentication
+- **Database Integration**: The system interacts with a MySQL database that stores transaction records, flagbits, and time periods
+- **Stored Procedures**: Uses database stored procedures for critical operations like setting/removing flags
+- **Temporal Data**: Maintains historical records of all flagbit changes with effective time periods
 
-## Laravel Sponsors
+### Application Structure
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **Controllers**: Handle incoming HTTP requests and return appropriate responses
+- **Middleware**: Manages request authentication, validation, and preprocessing
+- **Services**: Contains the core business logic separated from controllers
+- **Models**: Represents database entities and their relationships
+- **Repositories**: Abstracts database operations away from the service layer
+- **Events & Listeners**: Implements event-driven architecture for certain operations
+- **Jobs & Queues**: Handles asynchronous processing using database queue driver
 
-### Premium Partners
+## API Endpoints
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+The API provides these main endpoints:
 
-## Contributing
+- `GET /api/v1/flagbits/active` - Get all active flags for a transaction
+- `GET /api/v1/flagbits/history` - Get the complete flag history for a transaction
+- `POST /api/v1/flagbits/set` - Add a new flag to a transaction (requires master API key)
+- `DELETE /api/v1/flagbits/remove` - Remove a flag from a transaction (requires master API key)
+- `GET /api/v1/time` - Get the current server time
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Security Model
 
-## Code of Conduct
+The system implements a tiered security approach:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+1. **Basic Authentication**: All requests require a valid API key
+2. **Contract Verification**: API keys are tied to specific contracts, preventing access to transactions from other contracts
+3. **Permission Levels**: Some operations (like setting/removing flags) require elevated permissions via a master API key
 
-## Security Vulnerabilities
+### Authentication & Authorization
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- **API Key Authentication**: All API endpoints (except documentation) are protected by API key authentication via the `ApiKeyAuth` middleware
+- **Role-Based Access Control**: Different API keys have different permission levels (standard vs. master)
+- **Request Validation**: All incoming requests are validated for required parameters and proper formatting
+- **Token Management**: API keys are securely stored with hashing and have configurable expiration
 
-## License
+### Request & Response Security
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- **Input Validation**: All user inputs are validated against strict rules before processing
+- **Parameter Sanitization**: Input parameters are sanitized to prevent SQL injection and other attacks
+- **Rate Limiting**: API endpoints are protected against abuse with configurable rate limiting
+- **CORS Protection**: Cross-Origin Resource Sharing policies are properly configured
+- **JSON Encoding**: All responses use properly encoded JSON with appropriate HTTP status codes
+
+## Error Reporting & Logging
+
+- **Structured Error Responses**: All API errors return a consistent JSON structure with proper HTTP status codes
+- **Detailed Logging**: Application errors are logged with detailed context information using Monolog
+- **Exception Handling**: Custom exception handlers capture and report errors appropriately
+- **Monitoring**: Integration with monitoring systems for real-time error alerting
+- **Audit Trail**: Critical operations are logged with user information for audit purposes
+
+## Coding Style & Standards
+
+- **PSR Standards**: Code follows PSR-1, PSR-4, and PSR-12 coding standards
+- **Type Hinting**: Strict type declarations are used throughout the codebase
+- **Documentation**: All classes and methods include PHPDoc blocks
+- **Automated Testing**: Comprehensive test suite using PHPUnit, Codeception, and Behat
+- **Code Quality Tools**: Utilizes static analysis tools for maintaining code quality
+- **Dependency Management**: Composer for managing PHP dependencies
+
+## Getting Started
+
+Please see [INSTALL.md](INSTALL.md) for detailed installation instructions.
+
+## Testing
+
+This project includes automated tests using Codeception. Run tests with:
+
+```bash
+php artisan test
+```
+
+or
+
+```bash
+vendor/bin/codecept run
+```
+
