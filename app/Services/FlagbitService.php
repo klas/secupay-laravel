@@ -15,13 +15,7 @@ class FlagbitService
 {
     public function getActiveFlagbits(int $transId, ?ApiKey $apiKey): Collection
     {
-        $transaction = Transaktion::where('trans_id', $transId)
-            ->where('vertrag_id', $apiKey->vertrag_id)
-            ->first();
-
-        if (!$transaction) {
-            throw new TransactionNotFoundException("Transaction {$transId} not found or access denied");
-        }
+        $this->validateTransactionAccess($transId, $apiKey);
 
         $now = now();
 
@@ -43,13 +37,7 @@ class FlagbitService
 
     public function setFlagbit(int $transId, int $flagbitId, ?ApiKey $apiKey): bool
     {
-        $transaction = Transaktion::where('trans_id', $transId)
-            ->where('vertrag_id', $apiKey->vertrag_id)
-            ->first();
-
-        if (!$transaction) {
-            throw new TransactionNotFoundException("Transaction {$transId} not found or access denied");
-        }
+        $this->validateTransactionAccess($transId, $apiKey);
 
         return DB::transaction(function () use ($transId, $flagbitId, $apiKey) {
             DB::statement('CALL stamd_aendern_erstellen_flagbit_ref(?, ?, ?, ?, ?, @error_code, @error_message)', [
@@ -70,13 +58,7 @@ class FlagbitService
 
     public function removeFlagbit(int $transId, int $flagbitId, ?ApiKey $apiKey): bool
     {
-        $transaction = Transaktion::where('trans_id', $transId)
-            ->where('vertrag_id', $apiKey->vertrag_id)
-            ->first();
-
-        if (!$transaction) {
-            throw new TransactionNotFoundException("Transaction {$transId} not found or access denied");
-        }
+        $this->validateTransactionAccess($transId, $apiKey);
 
         return DB::transaction(function () use ($transId, $flagbitId, $apiKey) {
             DB::statement('CALL stamd_aendern_erstellen_flagbit_ref(?, ?, ?, ?, ?, @error_code, @error_message)', [
@@ -97,13 +79,7 @@ class FlagbitService
 
     public function getFlagbitHistory(int $transId, ?ApiKey $apiKey): Collection
     {
-        $transaction = Transaktion::where('trans_id', $transId)
-            ->where('vertrag_id', $apiKey->vertrag_id)
-            ->first();
-
-        if (!$transaction) {
-            throw new TransactionNotFoundException("Transaction {$transId} not found or access denied");
-        }
+        $this->validateTransactionAccess($transId, $apiKey);
 
         $history = FlagbitRef::select([
             'stamd_flagbit_ref.flagbit',
@@ -120,5 +96,18 @@ class FlagbitService
             ->get();
 
         return $history;
+    }
+
+    private function validateTransactionAccess(int $transId, ?ApiKey $apiKey): Transaktion
+    {
+        $transaction = Transaktion::where('trans_id', $transId)
+            ->where('vertrag_id', $apiKey->vertrag_id)
+            ->first();
+
+        if (!$transaction) {
+            throw new TransactionNotFoundException("Transaction {$transId} not found or access denied");
+        }
+
+        return $transaction;
     }
 }
