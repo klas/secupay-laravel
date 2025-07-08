@@ -51,7 +51,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{baseUrl}}/flagbits/active?transaction_id=3",
+					"raw": "{{baseUrl}}/flagbits/active?trans_id=3",
 					"host": [
 						"{{baseUrl}}"
 					],
@@ -61,7 +61,7 @@
 					],
 					"query": [
 						{
-							"key": "transaction_id",
+							"key": "trans_id",
 							"value": "3"
 						}
 					]
@@ -80,7 +80,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{baseUrl}}/flagbits/history?transaction_id=3",
+					"raw": "{{baseUrl}}/flagbits/history?trans_id=3",
 					"host": [
 						"{{baseUrl}}"
 					],
@@ -90,7 +90,7 @@
 					],
 					"query": [
 						{
-							"key": "transaction_id",
+							"key": "trans_id",
 							"value": "3"
 						}
 					]
@@ -115,7 +115,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"transaction_id\": 3,\n    \"flagbit_id\": 5\n}"
+					"raw": "{\n    \"trans_id\": 4,\n    \"flagbit_id\": 5\n}"
 				},
 				"url": {
 					"raw": "{{baseUrl}}/flagbits/set",
@@ -147,7 +147,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"transaction_id\": 3,\n    \"flagbit_id\": 5\n}"
+					"raw": "{\n    \"trans_id\": 4,\n    \"flagbit_id\": 5\n}"
 				},
 				"url": {
 					"raw": "{{baseUrl}}/flagbits/remove",

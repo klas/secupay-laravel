@@ -36,7 +36,7 @@ class FlagbitService
 
             if ($result->error_code != 0) {
                 throw new InvalidFlagbitOperationException(
-                    $result->error_message ?: "Failed to set flagbit {$flagbitId} for transaction {$transId}"
+                    $result->error_message ?? "Failed to set flagbit {$flagbitId} for transaction {$transId}"
                 );
             }
 
@@ -50,14 +50,14 @@ class FlagbitService
 
         return DB::transaction(function () use ($transId, $flagbitId, $apiKey) {
             DB::statement('CALL stamd_aendern_erstellen_flagbit_ref(?, ?, ?, ?, ?, @error_code, @error_message)', [
-                2, $transId, $flagbitId, 0, $apiKey->bearbeiter_id
+                2, $transId, $flagbitId, 2, $apiKey->bearbeiter_id
             ]);
 
-            $result = DB::select('SELECT @error_code as error_code, @error_message')[0];
+            $result = DB::select('SELECT @error_code as error_code, @error_message as error_message')[0];
 
             if ($result->error_code != 0) {
                 throw new InvalidFlagbitOperationException(
-                    $result->error_message ?: "Failed to remove flagbit {$flagbitId} from transaction {$transId}"
+                    $result->error_message ?? "Failed to remove flagbit {$flagbitId} from transaction {$transId}"
                 );
             }
 
