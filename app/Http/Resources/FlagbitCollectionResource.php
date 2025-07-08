@@ -8,9 +8,6 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class FlagbitCollectionResource extends ResourceCollection
 {
-    /**
-     * Transform the resource collection into an array.
-     */
     public function toArray(Request $request): array
     {
         return [
@@ -20,9 +17,6 @@ class FlagbitCollectionResource extends ResourceCollection
         ];
     }
 
-    /**
-     * Get additional data that should be returned with the resource array.
-     */
     public function with(Request $request): array
     {
         return [

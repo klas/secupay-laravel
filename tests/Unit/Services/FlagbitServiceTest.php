@@ -5,7 +5,6 @@ namespace Tests\Unit\Services;
 use App\Services\FlagbitService;
 use App\Models\ApiKey;
 use App\Models\Transaktion;
-use App\Models\FlagbitRef;
 use App\Exceptions\TransactionNotFoundException;
 use App\Exceptions\InvalidFlagbitOperationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;

@@ -32,7 +32,7 @@ class FlagbitController extends Controller
             ($data['api_key'] instanceof(ApiKey::class)) ? $data['api_key'] : null
         );
 
-        return (new FlagbitCollectionResource($flagbits))
+        return new FlagbitCollectionResource($flagbits)
             ->additional(['trans_id' => $data['trans_id']])
             ->response();
     }
@@ -54,7 +54,7 @@ class FlagbitController extends Controller
             'action' => 'set'
         ];
 
-        return (new FlagbitActionResource($responseData))->response();
+        return new FlagbitActionResource($responseData)->response();
     }
 
     public function removeFlagbit(RemoveFlagbitRequest $request): JsonResponse
@@ -74,7 +74,7 @@ class FlagbitController extends Controller
             'action' => 'remove'
         ];
 
-        return (new FlagbitActionResource($responseData))->response();
+        return new FlagbitActionResource($responseData)->response();
     }
 
     public function getFlagbitHistory(GetFlagbitHistoryRequest $request): JsonResponse
@@ -86,7 +86,7 @@ class FlagbitController extends Controller
             ($data['api_key'] instanceof(ApiKey::class)) ? $data['api_key'] : null
         );
 
-        return (new FlagbitHistoryResource($history))
+        return new FlagbitHistoryResource($history)
             ->additional(['trans_id' => $data['trans_id']])
             ->response();
     }

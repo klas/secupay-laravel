@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Support\Str;
 use Tests\TestCase;
 use App\Models\ApiKey;
 use Illuminate\Foundation\Testing\RefreshDatabase;

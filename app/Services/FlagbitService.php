@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Models\ApiKey;
 use App\Models\Transaktion;
 use App\Models\FlagbitRef;
-use App\Constants\DataFlag;
 use App\Exceptions\TransactionNotFoundException;
 use App\Exceptions\InvalidFlagbitOperationException;
 use Illuminate\Support\Collection;
