@@ -15,7 +15,7 @@ class GetActiveFlagbitsRequest extends FormRequest
     {
         return [
             'trans_id' => 'required|integer|min:1',
-            'api_key' => 'nullable|'
+            'api_key' => 'nullable'
         ];
     }
 

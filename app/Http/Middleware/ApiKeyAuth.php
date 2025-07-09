@@ -6,16 +6,20 @@ use App\Models\ApiKey;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Validator;
 
 class ApiKeyAuth
 {
     public function handle(Request $request, Closure $next, ?string $requireMasterKey = null): JsonResponse
     {
         $token = $request->header('Authorization');
+        $validator = Validator::make(['token' => $token], ['token' => ['required', 'string']]);
 
-        if (!$token) {
+        if ($validator->fails()) {
             return response()->json(['error' => 'API key required'], 401);
         }
+
+        $token = $validator->validated()['token'];
 
         $token = str_replace('Bearer ', '', $token);
 
